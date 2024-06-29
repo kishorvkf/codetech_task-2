@@ -1,0 +1,60 @@
+import socket
+import requests
+from bs4 import BeautifulSoup
+import nmap
+
+
+def scan_ports(target_ip, ports):
+    open_ports = []
+    for port in ports:
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            socket.setdefaulttimeout(1)
+            result = sock.connect_ex((target_ip, port))
+            if result == 0:
+                open_ports.append(port)
+            sock.close()
+        except KeyboardInterrupt:
+            print("Keyboard Interrupt")
+            exit()
+        except socket.gaierror:
+            print("Hostname could not be resolved.")
+            exit()
+        except socket.error:
+            print("Couldn't connect to server.")
+            exit()
+    return open_ports
+
+
+def check_wordpress_version(url):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        meta_generator = soup.find('meta', attrs={'name': 'generator'})
+        if meta_generator:
+            generator_content = meta_generator.get('content', '').lower()
+            if 'wordpress' in generator_content:
+                return True, generator_content
+        return False, None
+    except requests.exceptions.RequestException:
+        print("Error fetching URL")
+        return False, None
+
+
+def vulnerability_scan(target_ip, target_url):
+    ports_to_scan = [21, 22, 80, 443, 3306]  # Example ports to scan
+    open_ports = scan_ports(target_ip, ports_to_scan)
+    print(f"Open ports on {target_ip}: {open_ports}")
+
+    is_wordpress, wordpress_version = check_wordpress_version(target_url)
+    if is_wordpress:
+        print(f"Detected WordPress with version: {wordpress_version}")
+
+
+
+
+if __name__ == "__main__":
+    target_ip = input("enter the target IP:     ")
+    target_url = input("enter the target URL:   ")
+
+    vulnerability_scan(target_ip, target_url)
