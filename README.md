@@ -1,7 +1,13 @@
-# codetech_task-2
+# NAME : V KISHOR 
+# ID : CT08DS2111
+# DOMAIN : CYBER SECUTIY & ETHICAL HACKING
+# DURATION : JUNE TO JULY
+# MENTOR :  Muzammil
+
+
 # Project Overview
-# The Vulnerability Scanning Tool is designed to help organizations identify, assess, and remediate security vulnerabilities within their IT infrastructure. This tool aims to enhance security # # 
- # posture by automating the detection of potential weaknesses and providing actionable insights.
+  The Vulnerability Scanning Tool is designed to help organizations identify, assess, and remediate security vulnerabilities within their IT infrastructure. This tool aims to enhance security # # 
+  posture by automating the detection of potential weaknesses and providing actionable insights.
 
  # Features
 
